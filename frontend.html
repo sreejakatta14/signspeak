@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign & Speech to Text</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    video {
+      width: 400px;
+      border-radius: 10px;
+    }
+    button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    textarea {
+      width: 80%;
+      height: 120px;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sign & Speech to Text Converter</h1>
+
+  <!-- Webcam preview -->
+  <video id="video" autoplay playsinline></video><br>
+
+  <!-- Capture sign image -->
+  <button onclick="captureImage()">🖼️ Predict Sign</button>
+
+  <!-- Start transcription -->
+  <button onclick="startSpeech()">🎤 Start Speech</button>
+
+  <!-- Result -->
+  <h3>Transcribed Text:</h3>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    // Set up webcam stream
+    const video = document.getElementById("video");
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      video.srcObject = stream;
+    });
+
+    function captureImage() {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        const formData = new FormData();
+        formData.append("image", blob, "frame.jpg");
+
+        fetch("/predict_sign", {
+          method: "POST",
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").value += data.prediction + " ";
+        });
+      }, "image/jpeg");
+    }
+
+    function startSpeech() {
+      fetch("/transcribe_speech")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").value += data.transcription + " ";
+        });
+    }
+  </script>
+</body>
+</html>
