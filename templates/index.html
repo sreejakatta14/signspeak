@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .video-container {
+            margin: 30px auto 10px;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .video-container img {
+            width: 100%;
+            border-radius: 15px;
+            border: 4px solid #444;
+            transition: all 0.3s ease;
+        }
+
+        .pulsing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+        }
+
+        .buttons button {
+            margin: 10px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .buttons button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .text-box, .speech-to-text {
+            background-color: white;
+            padding: 20px;
+            margin: 30px auto;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .text-box h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        #translated-text, #speech-output {
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        #speech-input-btn {
+            background-color: #28a745;
+        }
+
+        #speech-input-btn:hover {
+            background-color: #218838;
+        }
+
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Language to Text & Speech</h1>
+
+    <div class="video-container">
+        <img id="video" src="/static/camera_off.png" alt="Camera Feed" style="width: 400px; height : auto"/>
+    </div>
+
+    <div class="buttons">
+        <button onclick="toggleCamera()" id="toggle-btn">📷 Start Camera</button>
+        <button onclick="toggleSpeech()" id="speech-btn">🔊 Disable Speech</button>
+    </div>
+
+    <div class="text-box">
+        <h2>Translated Text:</h2>
+        <p id="translated-text">Waiting...</p>
+    </div>
+
+    <div class="speech-to-text">
+        <button onclick="startListening()" id="speech-input-btn">🎤 Speak Now</button>
+        <p id="speech-output">Speech-to-text output will appear here...</p>
+    </div>
+
+    <script>
+        let cameraRunning = false;
+        let speechEnabled = true;
+
+        function toggleCamera() {
+            const video = document.getElementById("video");
+            const toggleBtn = document.getElementById("toggle-btn");
+
+            video.classList.add("hidden");
+
+            setTimeout(() => {
+                if (!cameraRunning) {
+                    video.src = "/video_feed";
+                    video.classList.add("pulsing");
+                    toggleBtn.innerText = "📴 Stop Camera";
+                    cameraRunning = true;
+                } else {
+                    fetch('/stop_camera').then(() => {
+                        video.src = "/static/camera_off.png";
+                        video.classList.remove("pulsing");
+                        toggleBtn.innerText = "📷 Start Camera";
+                        cameraRunning = false;
+                    });
+                }
+                video.classList.remove("hidden");
+            }, 300);
+        }
+
+        function toggleSpeech() {
+            speechEnabled = !speechEnabled;
+            fetch('/toggle_speech', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ enable: speechEnabled })
+            });
+            document.getElementById("speech-btn").innerText =
+                speechEnabled ? "🔊 Disable Speech" : "🔇 Enable Speech";
+        }
+
+        function fetchText() {
+            fetch('/get_text')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("translated-text").innerText = data.text || "Waiting...";
+                });
+        }
+
+        setInterval(fetchText, 1000);
+
+        function startListening() {
+            const output = document.getElementById("speech-output");
+
+            if (!('webkitSpeechRecognition' in window)) {
+                output.innerText = "Sorry, your browser doesn't support speech recognition.";
+                return;
+            }
+
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            output.innerText = "Listening... 🎧";
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                output.innerText = "You said: " + transcript;
+            };
+
+            recognition.onerror = function (event) {
+                output.innerText = "Error occurred: " + event.error;
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+</html>

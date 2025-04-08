@@ -9,8 +9,9 @@ import pyttsx3
 from keras.models import load_model
 from cvzone.HandTrackingModule import HandDetector
 from string import ascii_uppercase
-import enchant
-ddd=enchant.Dict("en-US")
+from spellchecker import SpellChecker
+
+ddd = SpellChecker()
 hd = HandDetector(maxHands=1)
 hd2 = HandDetector(maxHands=1)
 import tkinter as tk
@@ -199,29 +200,29 @@ class Application:
                             os1 = ((400 - h) // 2) - 15
                             for t in range(0, 4, 1):
                                 cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                         (0, 255, 0), 3)
+                                        (0, 255, 0), 3)
                             for t in range(5, 8, 1):
                                 cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                         (0, 255, 0), 3)
+                                        (0, 255, 0), 3)
                             for t in range(9, 12, 1):
                                 cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                         (0, 255, 0), 3)
+                                        (0, 255, 0), 3)
                             for t in range(13, 16, 1):
                                 cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                         (0, 255, 0), 3)
+                                        (0, 255, 0), 3)
                             for t in range(17, 20, 1):
                                 cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                         (0, 255, 0), 3)
+                                        (0, 255, 0), 3)
                             cv2.line(white, (self.pts[5][0] + os, self.pts[5][1] + os1), (self.pts[9][0] + os, self.pts[9][1] + os1), (0, 255, 0),
-                                     3)
+                                    3)
                             cv2.line(white, (self.pts[9][0] + os, self.pts[9][1] + os1), (self.pts[13][0] + os, self.pts[13][1] + os1), (0, 255, 0),
-                                     3)
+                                    3)
                             cv2.line(white, (self.pts[13][0] + os, self.pts[13][1] + os1), (self.pts[17][0] + os, self.pts[17][1] + os1),
-                                     (0, 255, 0), 3)
+                                    (0, 255, 0), 3)
                             cv2.line(white, (self.pts[0][0] + os, self.pts[0][1] + os1), (self.pts[5][0] + os, self.pts[5][1] + os1), (0, 255, 0),
-                                     3)
+                                    3)
                             cv2.line(white, (self.pts[0][0] + os, self.pts[0][1] + os1), (self.pts[17][0] + os, self.pts[17][1] + os1), (0, 255, 0),
-                                     3)
+                                    3)
 
                             for i in range(21):
                                 cv2.circle(white, (self.pts[i][0] + os, self.pts[i][1] + os1), 2, (0, 0, 255), 1)
@@ -279,29 +280,29 @@ class Application:
                     os1 = ((400 - h) // 2) - 15
                     for t in range(0, 4, 1):
                         cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                 (0, 255, 0), 3)
+                                (0, 255, 0), 3)
                     for t in range(5, 8, 1):
                         cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                 (0, 255, 0), 3)
+                                (0, 255, 0), 3)
                     for t in range(9, 12, 1):
                         cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                 (0, 255, 0), 3)
+                                (0, 255, 0), 3)
                     for t in range(13, 16, 1):
                         cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                 (0, 255, 0), 3)
+                                (0, 255, 0), 3)
                     for t in range(17, 20, 1):
                         cv2.line(white, (self.pts[t][0] + os, self.pts[t][1] + os1), (self.pts[t + 1][0] + os, self.pts[t + 1][1] + os1),
-                                 (0, 255, 0), 3)
+                                (0, 255, 0), 3)
                     cv2.line(white, (self.pts[5][0] + os, self.pts[5][1] + os1), (self.pts[9][0] + os, self.pts[9][1] + os1), (0, 255, 0),
-                             3)
+                            3)
                     cv2.line(white, (self.pts[9][0] + os, self.pts[9][1] + os1), (self.pts[13][0] + os, self.pts[13][1] + os1), (0, 255, 0),
-                             3)
+                            3)
                     cv2.line(white, (self.pts[13][0] + os, self.pts[13][1] + os1), (self.pts[17][0] + os, self.pts[17][1] + os1),
-                             (0, 255, 0), 3)
+                            (0, 255, 0), 3)
                     cv2.line(white, (self.pts[0][0] + os, self.pts[0][1] + os1), (self.pts[5][0] + os, self.pts[5][1] + os1), (0, 255, 0),
-                             3)
+                            3)
                     cv2.line(white, (self.pts[0][0] + os, self.pts[0][1] + os1), (self.pts[17][0] + os, self.pts[17][1] + os1), (0, 255, 0),
-                             3)
+                            3)
 
                     for i in range(21):
                         cv2.circle(white, (self.pts[i][0] + os, self.pts[i][1] + os1), 2, (0, 0, 255), 1)
@@ -397,8 +398,8 @@ class Application:
 
         # condition for [Aemnst]
         l = [[5, 2], [5, 3], [3, 5], [3, 6], [3, 0], [3, 2], [6, 4], [6, 1], [6, 2], [6, 6], [6, 7], [6, 0], [6, 5],
-             [4, 1], [1, 0], [1, 1], [6, 3], [1, 6], [5, 6], [5, 1], [4, 5], [1, 4], [1, 5], [2, 0], [2, 6], [4, 6],
-             [1, 0], [5, 7], [1, 6], [6, 1], [7, 6], [2, 5], [7, 1], [5, 4], [7, 0], [7, 5], [7, 2]]
+            [4, 1], [1, 0], [1, 1], [6, 3], [1, 6], [5, 6], [5, 1], [4, 5], [1, 4], [1, 5], [2, 0], [2, 6], [4, 6],
+            [1, 0], [5, 7], [1, 6], [6, 1], [7, 6], [2, 5], [7, 1], [5, 4], [7, 0], [7, 5], [7, 2]]
         if pl in l:
             if (self.pts[6][1] < self.pts[8][1] and self.pts[10][1] < self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and self.pts[18][1] < self.pts[20][
                 1]):
@@ -581,7 +582,7 @@ class Application:
 
         # con for [b][pqz]
         l = [[5, 0], [5, 1], [5, 4], [5, 5], [5, 6], [6, 1], [7, 6], [0, 2], [7, 1], [7, 4], [6, 6], [7, 2], [5, 0],
-             [6, 3], [6, 4], [7, 5], [7, 2]]
+            [6, 3], [6, 4], [7, 5], [7, 2]]
         pl = [ch1, ch2]
         if pl in l:
             if (self.pts[6][1] > self.pts[8][1] and self.pts[10][1] > self.pts[12][1] and self.pts[14][1] > self.pts[16][1] and self.pts[18][1] > self.pts[20][
@@ -590,7 +591,7 @@ class Application:
 
         # con for [f][pqz]
         l = [[6, 1], [6, 0], [0, 3], [6, 4], [2, 2], [0, 6], [6, 2], [7, 6], [4, 6], [4, 1], [4, 2], [0, 2], [7, 1],
-             [7, 4], [6, 6], [7, 2], [7, 5], [7, 2]]
+            [7, 4], [6, 6], [7, 2], [7, 5], [7, 2]]
         pl = [ch1, ch2]
         if pl in l:
             if (self.pts[6][1] < self.pts[8][1] and self.pts[10][1] > self.pts[12][1] and self.pts[14][1] > self.pts[16][1] and
@@ -611,7 +612,7 @@ class Application:
         pl = [ch1, ch2]
         if pl in l:
             if ((self.pts[6][1] > self.pts[8][1] and self.pts[10][1] < self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and
-                 self.pts[18][1] < self.pts[20][1]) and (self.pts[2][0] < self.pts[0][0]) and self.pts[4][1] > self.pts[14][1]):
+                self.pts[18][1] < self.pts[20][1]) and (self.pts[2][0] < self.pts[0][0]) and self.pts[4][1] > self.pts[14][1]):
                 ch1 = 1
 
         l = [[4, 1], [4, 2], [4, 4]]
@@ -626,7 +627,7 @@ class Application:
         pl = [ch1, ch2]
         if pl in l:
             if ((self.pts[6][1] > self.pts[8][1] and self.pts[10][1] < self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and
-                 self.pts[18][1] < self.pts[20][1]) and (self.pts[2][0] < self.pts[0][0]) and self.pts[14][1] < self.pts[4][1]):
+                self.pts[18][1] < self.pts[20][1]) and (self.pts[2][0] < self.pts[0][0]) and self.pts[14][1] < self.pts[4][1]):
                 ch1 = 1
 
         l = [[6, 6], [6, 4], [6, 1], [6, 2]]
@@ -640,7 +641,7 @@ class Application:
         pl = [ch1, ch2]
         if pl in l:
             if ((self.pts[6][1] < self.pts[8][1] and self.pts[10][1] < self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and
-                 self.pts[18][1] > self.pts[20][1])):
+                self.pts[18][1] > self.pts[20][1])):
                 ch1 = 1
 
         # con for [yj][bfdi]
@@ -649,7 +650,7 @@ class Application:
         if pl in l:
             if (self.pts[4][0] < self.pts[5][0] + 15) and (
             (self.pts[6][1] < self.pts[8][1] and self.pts[10][1] < self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and
-             self.pts[18][1] > self.pts[20][1])):
+            self.pts[18][1] > self.pts[20][1])):
                 ch1 = 7
 
         # con for [uvr]
@@ -657,7 +658,7 @@ class Application:
         pl = [ch1, ch2]
         if pl in l:
             if ((self.pts[6][1] > self.pts[8][1] and self.pts[10][1] > self.pts[12][1] and self.pts[14][1] < self.pts[16][1] and
-                 self.pts[18][1] < self.pts[20][1])) and self.pts[4][1] > self.pts[14][1]:
+                self.pts[18][1] < self.pts[20][1])) and self.pts[4][1] > self.pts[14][1]:
                 ch1 = 1
 
         # con for [w]
@@ -865,4 +866,39 @@ class Application:
 
 print("Starting Application...")
 
-(Application()).root.mainloop()
+translated_text = ""  # Global variable to hold current prediction
+speech_enabled = True
+
+def run_camera():
+    global translated_text, speech_enabled
+
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Simulate prediction (replace this with actual model logic)
+        translated_text = "A"  # You'd update this based on model output
+
+        if speech_enabled:
+            print(f"Speaking: {translated_text}")  # Hook for text-to-speech
+
+        cv2.putText(frame, f"Detected: {translated_text}", (30, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+
+        yield (b'--frame\r\n'
+            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+    cap.release()
+
+def get_latest_text():
+    return translated_text
+
+def toggle_speech(enable):
+    global speech_enabled
+    speech_enabled = enable

@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+/* Video Container */
+.video-container img {
+    width: 80%;
+    max-width: 700px;
+    border: 3px solid #333;
+    border-radius: 10px;
+    margin-top: 20px;
+    transition: opacity 0.6s ease;
+    opacity: 1;
+}
+
+/* Fade effect when switching */
+.video-container img.hidden {
+    opacity: 0;
+}
+
+/* Pulsing border animation when camera is on */
+.pulsing {
+    border: 4px solid #00bfff !important;
+    animation: pulseBorder 1.5s infinite;
+}
+
+@keyframes pulseBorder {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 191, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(0, 191, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 191, 255, 0);
+    }
+}
+
+h1 {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.buttons {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.text-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 60%;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.speech-to-text {
+    margin: 30px auto;
+    width: 60%;
+    padding: 10px;
+}
+
+#speech-output {
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+}
+
+#speech-input-btn {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color:#007bff;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#speech-input-btn:hover {
+    background-color: #0056b3;
+}
